@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="CursWork.Views.FirstView">
+
+	<Grid RowDefinitions="7*,80*,7*" ShowGridLines="False">
+
+		<StackPanel>
+			
+			<ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto">
+				<TabControl Items="{Binding MainContext.Tab}">
+					<TabControl.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Grid.Column="0" Text="{Binding Header}"/>
+						</DataTemplate>
+					</TabControl.ItemTemplate>
+				</TabControl>
+			</ScrollViewer>
+			<DataGrid Name="DataTable" Items="{Binding $parent[Window].DataContext.Data.Players}"
+					  AutoGenerateColumns="True" CanUserSortColumns="True"/>
+			
+
+			<DockPanel Grid.Row="2" HorizontalAlignment="Center">
+
+				<Button Content="Query editor" Command="{Binding $parent[Window].DataContext.Change}" HorizontalContentAlignment="Center" MinWidth="300" MaxWidth="400"/>
+				<Button Content="Delete Tab" IsEnabled="{Binding MainContext.Tab.ButtonVisible}" MinWidth="300" MaxWidth="400" HorizontalContentAlignment="Center"/>
+				<Button Content="Add line" MinWidth="300" MaxWidth="400" HorizontalContentAlignment="Center"/>
+				<Button Content="Delete line" MinWidth="300" MaxWidth="400" HorizontalContentAlignment="Center"/>
+			</DockPanel>
+		</StackPanel>
+		
+		
+	</Grid>
+	
+	
+</UserControl>

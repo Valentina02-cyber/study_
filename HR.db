@@ -1,0 +1,62 @@
+--
+-- Файл сгенерирован с помощью SQLiteStudio v3.3.3 в Вт май 24 00:54:22 2022
+--
+-- Использованная кодировка текста: System
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Таблица: coach
+CREATE TABLE coach (name_coach STRING (100) PRIMARY KEY);
+INSERT INTO coach (name_coach) VALUES ('John Gosden');
+INSERT INTO coach (name_coach) VALUES ('William Jarvis');
+INSERT INTO coach (name_coach) VALUES ('James Tate');
+INSERT INTO coach (name_coach) VALUES ('George Boughey');
+INSERT INTO coach (name_coach) VALUES ('Ralph Beckett');
+INSERT INTO coach (name_coach) VALUES ('Aidan P. O''Brien');
+INSERT INTO coach (name_coach) VALUES ('Charlie Appleby');
+
+-- Таблица: competition
+CREATE TABLE competition (date DATE PRIMARY KEY, distance STRING (10), "view" STRING (10), name_competition STRING (100));
+INSERT INTO competition (date, distance, "view", name_competition) VALUES ('15.05.21', '1 mile', 'flat', 'Lockinge Stakes');
+INSERT INTO competition (date, distance, "view", name_competition) VALUES ('01.05.22', '1 mile', 'flat', '1000 Guineas');
+INSERT INTO competition (date, distance, "view", name_competition) VALUES ('30.04.22', '1 mile', 'flat', '2000 Guineas');
+
+-- Таблица: horse
+CREATE TABLE horse (name_horse STRING (100) PRIMARY KEY, age INTEGER, country STRING (100), victory INTEGER, name_jockey STRING (100) REFERENCES jockey (name_jockey), name_coach STRING (100) REFERENCES coach (name_coach));
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Palace Pier', 5, 'UK', 8, 'Frankie Dettori', 'John Gosden');
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Lady Bowthorpe', 6, 'UK', 3, 'Oisin Murphy', 'William Jarvis');
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Top Rank', 6, 'UK', 3, 'P. J. McDonald', 'James Tate');
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Cachet', 3, 'UK', 2, 'James Doyle', 'George Boughey');
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Prosperous Voyage', 3, 'UK', 0, 'Rob Hornby', 'Ralph Beckett');
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Tuesday', 3, 'UK', 1, 'Frankie Dettori', 'Aidan P. O''Brien');
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Coroebus', 3, 'UK', 3, 'James Doyle', 'Charlie Appleby');
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Native Trail', 3, 'UK', 5, '
+William T. Buick', 'Charlie Appleby');
+INSERT INTO horse (name_horse, age, country, victory, name_jockey, name_coach) VALUES ('Luxembourg', 3, 'UK', 3, 'Ryan Moore', 'Aidan P. O''Brien');
+
+-- Таблица: jockey
+CREATE TABLE jockey (name_jockey STRING (100) PRIMARY KEY);
+INSERT INTO jockey (name_jockey) VALUES ('Frankie Dettori');
+INSERT INTO jockey (name_jockey) VALUES ('Oisin Murphy');
+INSERT INTO jockey (name_jockey) VALUES ('P. J. McDonald');
+INSERT INTO jockey (name_jockey) VALUES ('James Doyle');
+INSERT INTO jockey (name_jockey) VALUES ('Rob Hornby');
+INSERT INTO jockey (name_jockey) VALUES ('
+William T. Buick');
+INSERT INTO jockey (name_jockey) VALUES ('Ryan Moore');
+
+-- Таблица: result
+CREATE TABLE result (time TIME PRIMARY KEY, occupied_place INTEGER, name_horse STRING (100) REFERENCES horse (name_horse), date DATE REFERENCES competition (date));
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES ('1:40.96', 1, 'Palace Pier', '15.05.21');
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES (NULL, 2, 'Lady Bowthorpe', '15.05.21');
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES (NULL, 3, 'Top Rank', '15.05.21');
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES ('1:36.55', 1, 'Cachet', '01.05.22');
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES (NULL, 2, 'Prosperous Voyage', '01.05.22');
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES (NULL, 3, 'Tuesday', '01.05.22');
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES ('1:36.27', 1, 'Coroebus', '30.04.22');
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES (NULL, 2, 'Native Trail', '30.04.22');
+INSERT INTO result (time, occupied_place, name_horse, date) VALUES (NULL, 3, 'Luxembourg', '30.04.22');
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;

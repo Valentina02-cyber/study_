@@ -1,0 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CursWork.Models
+{
+    public partial class Competition
+	{
+		public string NameCompetitionID {get;set;}
+		public string Distance {get;set;}
+		public string View {get;set;}
+		public double Date {get;set;}
+	}
+}

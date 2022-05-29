@@ -1,0 +1,125 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
+namespace CursWork.Models.Database
+{
+    public partial class DatabaseContext : DbContext
+    {
+        public DatabaseContext()
+        {
+        }
+
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+            : base(options)
+        {
+        }
+
+        public virtual DbSet<Horse> Horses { get; set; } = null!;
+        public virtual DbSet<Jockey> Jockeys { get; set; } = null!;
+        public virtual DbSet<Coach> Coaches { get; set; } = null!;
+        public virtual DbSet<Competition> Competitions { get; set; } = null!;
+        public virtual DbSet<Result> Resuls { get; set; } = null!;
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite(
+                "Data Source=" + Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName
+                + "\\Assets\\HR.db");
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Horse>(entity =>
+            {
+
+                entity.ToTable("Horse");
+
+                entity.Property(e => e.NameHorseID)
+                    .HasColumnType("STRING")
+                    .HasColumnName("Name");
+
+                entity.Property(e => e.Age)
+                    .HasColumnType("INTEGER")
+                    .HasColumnName("Age");
+
+                entity.Property(e => e.Country)
+                    .HasColumnType("STRING")
+                    .HasColumnName("Country");
+
+                entity.Property(e => e.Victory)
+                    .HasColumnType("INTEGER")
+                    .HasColumnName("Victory");
+
+            });
+
+            modelBuilder.Entity<Jockey>(entity =>
+            {
+                entity.ToTable("Jockey");
+
+                entity.Property(e => e.NameJockeyID)
+                .HasColumnType("STRING")
+                .HasColumnName("Name");
+                
+            });
+
+            modelBuilder.Entity<Coach>(entity =>
+            {
+                entity.ToTable("Coach");
+
+                entity.Property(e => e.NameCoachID)
+                .HasColumnType("STRING")
+                .HasColumnName("Name");
+
+            });
+
+            modelBuilder.Entity<Competition>(entity =>
+            {
+                entity.ToTable("Competition");
+
+                entity.Property(e => e.NameCompetitionID)
+                .HasColumnType("STRING")
+                .HasColumnName("Name");
+
+
+                entity.Property(e => e.Distance)
+                    .HasColumnType("STRING")
+                    .HasColumnName("Distance");
+
+		entity.Property(e => e.View)
+                    .HasColumnType("STRING")
+                    .HasColumnName("View");
+
+		entity.Property(e => e.Date)
+                    .HasColumnType("DOUBLE")
+                    .HasColumnName("Date");
+            });
+
+            modelBuilder.Entity<Result>(entity =>
+            {
+                entity.ToTable("Result");
+
+                entity.Property(e => e.Time)
+                .HasColumnType("DOUBLE")
+                .HasColumnName("Time");
+
+
+                entity.Property(e => e.Occupied_place)
+                    .HasColumnType("STRING")
+                    .HasColumnName("Occupied_place");
+
+                
+            });
+
+
+
+            OnModelCreatingPartial(modelBuilder);
+            }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+    }
+}
